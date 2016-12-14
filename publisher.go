@@ -37,9 +37,10 @@ type Publisher struct {
 //
 // WARNING: this is blocking call, it will not return until connection is
 // available. The only way to stop it is to use Cancel() method.
-func (p *Publisher) Write(b []byte) (int, error) {
+func (p *Publisher) Write(b []byte, key string) (int, error) {
 	pub := p.tmpl
 	pub.Body = b
+	p.key = key
 	return len(b), p.Publish(pub)
 }
 
