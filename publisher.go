@@ -43,6 +43,14 @@ func (p *Publisher) Write(b []byte) (int, error) {
 	return len(b), p.Publish(pub)
 }
 
+//Input buffer will be added as Publishing.Body.Use the routing key not the declare publisher key
+func (p *Publisher) WriteKey(b []byte) (int, error, key *string) {
+	pub := p.tmpl
+	pub.Body = b
+	p.key = k
+	return len(b), p.Publish(pub)
+}
+
 // Publish used to publish custom amqp.Publishing
 //
 // WARNING: this is blocking call, it will not return until connection is
